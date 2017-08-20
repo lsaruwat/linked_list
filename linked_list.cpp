@@ -26,24 +26,18 @@ class Person{
 	}
 };
 
-void insert(Person *newPerson, Person *head, Person *tail){
+void insert(Person *newPerson, Person *head){
 	Person *current;
-
-	if(head->next == tail){
-		head->next = newPerson;
-		newPerson->next = tail;
+	Person *previous;
+	
+	current = head;
+	while(current->next != NULL && newPerson->age >= current->age){
+		previous = current;
+		current = current->next;
 	}
-	else{
-		current = head;
-		Person *previous;
-		while(current->next != NULL && newPerson->age >= current->age){
-			previous = current;
-			current = current->next;
-		}
 
-		previous->next = newPerson;
-		newPerson->next = current;
-	}
+	previous->next = newPerson;
+	newPerson->next = current;
 
 }
 
@@ -63,16 +57,18 @@ int main(int argc, char *argv[]){
 	tail.next = NULL;
 	
 	Person logan = Person("Logan", 27);
+	Person frank = Person("Frank", 40);
 	Person john = Person("John", 21);
 	Person rick = Person("Rick", 22);
 	Person james = Person("James", 20);
 	Person dave = Person("Dave", 28);
 
-	insert(&logan,&head,&tail);
-	insert(&john,&head,&tail);
-	insert(&rick,&head,&tail);
-	insert(&james,&head,&tail);
-	insert(&dave,&head,&tail);
+	insert(&logan,&head);
+	insert(&frank,&head);
+	insert(&john,&head);
+	insert(&rick,&head);
+	insert(&james,&head);
+	insert(&dave,&head);
 
 	printList(&head);
 
