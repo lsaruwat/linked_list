@@ -37,7 +37,7 @@ class LinkedList{
 			this->head.next = &tail;
 		}
 
-		void insert(Node *newNode){
+		void insertNode(Node *newNode){
 			Node *current;
 			Node *previous;
 			
@@ -52,12 +52,29 @@ class LinkedList{
 
 		}
 
+		void deleteNode(Node *markedNode){
+			Node *current;
+			Node *previous;
+
+			previous = &this->head;
+			current = this->head.next;
+			while(current->next != NULL && markedNode->name != current->name && markedNode->age != current->age){
+				previous = current;
+				current = current->next;
+			}
+			if(current->next)previous->next = current->next;
+			
+
+		}
+
 		void printList(){
 			Node *current = this->head.next;
 			while(current->next != NULL){
 				cout << current->name << " " << current->age << endl;
 				current = current->next;
 			}
+
+			cout << "*---end---*" << endl;
 		}
 };
 
@@ -71,13 +88,23 @@ int main(int argc, char *argv[]){
 	Node rick = Node("Rick", 22);
 	Node james = Node("James", 20);
 	Node dave = Node("Dave", 28);
+	Node rogue = Node("Rogue", 45);
 
-	l.insert(&logan);
-	l.insert(&frank);
-	l.insert(&john);
-	l.insert(&rick);
-	l.insert(&james);
-	l.insert(&dave);
+	l.insertNode(&logan);
+	l.insertNode(&frank);
+	l.insertNode(&john);
+	l.insertNode(&rick);
+	l.insertNode(&james);
+	l.insertNode(&dave);
+
+	l.printList();
+
+	l.deleteNode(&john);
+	l.deleteNode(&rick);
+
+	l.printList();
+
+	l.deleteNode(&rogue);
 
 	l.printList();
 
