@@ -5,72 +5,81 @@
 using namespace std;
 
 
-class Person{
+class Node{
 	public:
 		string name;
 		int age;
-		Person *next;
+		Node *next;
 
-	Person(){
-		this->next =NULL;
+	Node(){
+		this->name = "";
+		this->age = 0;
+		this->next = NULL;
 	}
 
 
-	Person(string _name, int _age){
+	Node(string _name, int _age){
 		this->name = _name;
 		this->age = _age;
-	}
-
-	Person(string _name, int _age, Person *_next){
-
+		this->next = NULL;
 	}
 };
 
-void insert(Person *newPerson, Person *head){
-	Person *current;
-	Person *previous;
-	
-	current = head;
-	while(current->next != NULL && newPerson->age >= current->age){
-		previous = current;
-		current = current->next;
-	}
+class LinkedList{
+	public:
+		Node head;
+		Node tail;
 
-	previous->next = newPerson;
-	newPerson->next = current;
+		LinkedList(){
+			this->head = Node();
+			this->tail = Node();
 
-}
+			this->head.next = &tail;
+		}
 
-void printList(Person *head){
-	Person *current = head->next;
-	while(current->next != NULL){
-		cout << current->name << " " << current->age << endl;
-		current = current->next;
-	}
-}
+		void insert(Node *newNode){
+			Node *current;
+			Node *previous;
+			
+			current = &this->head;
+			while(current->next != NULL && newNode->name >= current->name){
+				previous = current;
+				current = current->next;
+			}
+
+			previous->next = newNode;
+			newNode->next = current;
+
+		}
+
+		void printList(){
+			Node *current = this->head.next;
+			while(current->next != NULL){
+				cout << current->name << " " << current->age << endl;
+				current = current->next;
+			}
+		}
+};
 
 
 int main(int argc, char *argv[]){
-	Person head = Person();
-	Person tail = Person();
-	head.next = &tail;
-	tail.next = NULL;
+	LinkedList l = LinkedList();
 	
-	Person logan = Person("Logan", 27);
-	Person frank = Person("Frank", 40);
-	Person john = Person("John", 21);
-	Person rick = Person("Rick", 22);
-	Person james = Person("James", 20);
-	Person dave = Person("Dave", 28);
+	Node logan = Node("Logan", 27);
+	Node frank = Node("Frank", 40);
+	Node john = Node("John", 21);
+	Node rick = Node("Rick", 22);
+	Node james = Node("James", 20);
+	Node dave = Node("Dave", 28);
 
-	insert(&logan,&head);
-	insert(&frank,&head);
-	insert(&john,&head);
-	insert(&rick,&head);
-	insert(&james,&head);
-	insert(&dave,&head);
+	l.insert(&logan);
+	l.insert(&frank);
+	l.insert(&john);
+	l.insert(&rick);
+	l.insert(&james);
+	l.insert(&dave);
 
-	printList(&head);
+	l.printList();
 
 
 	return 0;
